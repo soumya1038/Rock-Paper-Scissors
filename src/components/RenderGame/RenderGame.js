@@ -6,19 +6,36 @@ import {RiCloseLine} from 'react-icons/ri'
 import PlayingCart from '../PlayingCart/PlayingCart'
 
 import 'reactjs-popup/dist/index.css'
-
-import {ScoreText} from './StyledComponent'
+import {
+  GameContainer,
+  Header,
+  Title,
+  ScoreCard,
+  ScoreLabel,
+  ScoreText,
+  GameChoices,
+  GameResultContainer,
+  PlayerChoice,
+  PlayerLabel,
+  ResultImage,
+  ResultText,
+  PlayAgainButton,
+  RulesButton,
+  PopupContainer,
+  RulesImage,
+  CloseButton,
+} from './StyledComponent'
 
 const gameStatus = {
   win: 'WIN',
   lose: 'LOSE',
   draw: 'DRAW',
-  inetial: 'INNITIAL',
+  initial: 'INITIAL',
 }
 
 class RenderGame extends Component {
   state = {
-    isWin: gameStatus.inetial,
+    isWin: gameStatus.initial,
     score: 0,
     selectedImageUrl: '',
     opponentImageUrl: '',
@@ -54,7 +71,6 @@ class RenderGame extends Component {
       // console.log('win')
     } else if (id === 'PAPER' && randomOption.id === 'PAPER') {
       this.setState({isWin: gameStatus.draw})
-      this.setState({isWin: gameStatus.draw})
       console.log('Draw')
     } else if (id === 'SCISSORS' && randomOption.id === 'PAPER') {
       this.setState(prevState => ({
@@ -74,10 +90,10 @@ class RenderGame extends Component {
     }
   }
 
-  playAgamin = () => {
+  playAgain = () => {
     this.setState({
       clicked: false,
-      isWin: gameStatus.inetial,
+      isWin: gameStatus.initial,
       selectedImageUrl: '',
       opponentImageUrl: '',
     })
@@ -86,28 +102,22 @@ class RenderGame extends Component {
   renderWinView = () => {
     const {selectedImageUrl, opponentImageUrl} = this.state
     return (
-      <div>
-        <div>
-          <p>YOU</p>
-          <img
-            src={selectedImageUrl}
-            alt="your choice"
-            className="button-image"
-          />
-        </div>
-        <div>
-          <p>OPPONENT</p>
-          <img
-            src={opponentImageUrl}
-            alt="opponent choice"
-            className="button-image"
-          />
-        </div>
-        <p>YOU WON</p>
-        <button type="button" onClick={this.playAgamin}>
-          Play Again
-        </button>
-      </div>
+      <>
+        <GameResultContainer>
+          <PlayerChoice>
+            <PlayerLabel>YOU</PlayerLabel>
+            <ResultImage src={selectedImageUrl} alt="your choice" />
+          </PlayerChoice>
+          <PlayerChoice>
+            <PlayerLabel>OPPONENT</PlayerLabel>
+            <ResultImage src={opponentImageUrl} alt="opponent choice" />
+          </PlayerChoice>
+        </GameResultContainer>
+        <ResultText>YOU WON</ResultText>
+        <PlayAgainButton type="button" onClick={this.playAgain}>
+          PLAY AGAIN
+        </PlayAgainButton>
+      </>
     )
   }
 
@@ -115,28 +125,22 @@ class RenderGame extends Component {
     const {selectedImageUrl, opponentImageUrl} = this.state
 
     return (
-      <div>
-        <div>
-          <p>YOU</p>
-          <img
-            src={selectedImageUrl}
-            alt="your choice"
-            className="button-image"
-          />
-        </div>
-        <div>
-          <p>OPPONENT</p>
-          <img
-            src={opponentImageUrl}
-            alt="opponent choice"
-            className="button-image"
-          />
-        </div>
-        <p>YOU LOSE</p>
-        <button type="button" onClick={this.playAgamin}>
-          Play Again
-        </button>
-      </div>
+      <>
+        <GameResultContainer>
+          <PlayerChoice>
+            <PlayerLabel>YOU</PlayerLabel>
+            <ResultImage src={selectedImageUrl} alt="your choice" />
+          </PlayerChoice>
+          <PlayerChoice>
+            <PlayerLabel>OPPONENT</PlayerLabel>
+            <ResultImage src={opponentImageUrl} alt="opponent choice" />
+          </PlayerChoice>
+        </GameResultContainer>
+        <ResultText>YOU LOSE</ResultText>
+        <PlayAgainButton type="button" onClick={this.playAgain}>
+          PLAY AGAIN
+        </PlayAgainButton>
+      </>
     )
   }
 
@@ -144,28 +148,22 @@ class RenderGame extends Component {
     const {selectedImageUrl, opponentImageUrl} = this.state
 
     return (
-      <div>
-        <div>
-          <p>YOU</p>
-          <img
-            src={selectedImageUrl}
-            alt="your choice"
-            className="button-image"
-          />
-        </div>
-        <div>
-          <p>OPPONENT</p>
-          <img
-            src={opponentImageUrl}
-            alt="opponent choice"
-            className="button-image"
-          />
-        </div>
-        <p>IT IS DRAW</p>
-        <button type="button" onClick={this.playAgamin}>
-          Play Again
-        </button>
-      </div>
+      <>
+        <GameResultContainer>
+          <PlayerChoice>
+            <PlayerLabel>YOU</PlayerLabel>
+            <ResultImage src={selectedImageUrl} alt="your choice" />
+          </PlayerChoice>
+          <PlayerChoice>
+            <PlayerLabel>OPPONENT</PlayerLabel>
+            <ResultImage src={opponentImageUrl} alt="opponent choice" />
+          </PlayerChoice>
+        </GameResultContainer>
+        <ResultText>IT IS DRAW</ResultText>
+        <PlayAgainButton type="button" onClick={this.playAgain}>
+          PLAY AGAIN
+        </PlayAgainButton>
+      </>
     )
   }
 
@@ -188,55 +186,49 @@ class RenderGame extends Component {
     const {choicesList} = this.props
     const {score, clicked} = this.state
     return (
-      <>
-        <div>
-          <h1>Rock Paper Scissors</h1>
-          <div>
-            <p>Score</p>
+      <GameContainer>
+        <Header>
+          <Title>
+            ROCK
+            <br />
+            PAPER
+            <br />
+            SCISSORS
+          </Title>
+          <ScoreCard>
+            <ScoreLabel>Score</ScoreLabel>
             <ScoreText>{score}</ScoreText>
-          </div>
-        </div>
+          </ScoreCard>
+        </Header>
+
         {!clicked && (
-          <div>
-            <ul>
-              {choicesList.map(each => (
-                <PlayingCart
-                  eachOption={each}
-                  key={each.id}
-                  onSelectOption={this.onSelectOption}
-                />
-              ))}
-            </ul>
-          </div>
+          <GameChoices>
+            {choicesList.map(each => (
+              <PlayingCart
+                eachOption={each}
+                key={each.id}
+                onSelectOption={this.onSelectOption}
+              />
+            ))}
+          </GameChoices>
         )}
+
         {this.renderAllComponent()}
-        <Popup
-          modal
-          trigger={
-            <button type="button" className="trigger-button">
-              RULES
-            </button>
-          }
-        >
+
+        <Popup modal trigger={<RulesButton type="button">RULES</RulesButton>}>
           {close => (
-            <>
-              <div>
-                <img
-                  src="https://assets.ccbp.in/frontend/react-js/rock-paper-scissor/rules-image.png"
-                  alt="rules"
-                />
-              </div>
-              <button
-                type="button"
-                className="trigger-button"
-                onClick={() => close()}
-              >
+            <PopupContainer>
+              <CloseButton type="button" onClick={() => close()}>
                 <RiCloseLine />
-              </button>
-            </>
+              </CloseButton>
+              <RulesImage
+                src="https://assets.ccbp.in/frontend/react-js/rock-paper-scissor/rules-image.png"
+                alt="rules"
+              />
+            </PopupContainer>
           )}
         </Popup>
-      </>
+      </GameContainer>
     )
   }
 }

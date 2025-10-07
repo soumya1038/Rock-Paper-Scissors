@@ -1,0 +1,21 @@
+.choice-item {
+  list-style: none;
+}
+
+.choice-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s;
+}
+
+.choice-button:hover {
+  transform: scale(1.1);
+}
+
+.choice-image {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+}

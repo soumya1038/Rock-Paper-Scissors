@@ -1,3 +1,5 @@
+import './PlayingCart.css'
+
 const PlayingCart = props => {
   const {eachOption, onSelectOption} = props
   const {imageUrl, id} = eachOption
@@ -5,13 +7,14 @@ const PlayingCart = props => {
   const onclickButton = () => onSelectOption(id)
 
   return (
-    <li>
+    <li className="choice-item">
       <button
+        className="choice-button"
         type="button"
         data-testid={`${id.toLowerCase()}Button`}
         onClick={onclickButton}
       >
-        <img src={imageUrl} alt={id} className="button-image" />
+        <img className="choice-image" src={imageUrl} alt={id} />
       </button>
     </li>
   )
